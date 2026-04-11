@@ -159,7 +159,7 @@ export default function TodoCard() {
           dateTime={DUE_DATE.toISOString()}
           aria-label={`${formatDueDate(DUE_DATE)}`}
         >
-          Due {formatDueDate(DUE_DATE)}
+          {formatDueDate(DUE_DATE)}
         </time>
       </div>
 
