@@ -1,0 +1,214 @@
+/* ── Card ─────────────────────────────────────────── */
+.todo-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.10);
+  padding: 1.75rem;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: box-shadow 0.2s ease;
+}
+.todo-card:focus-within {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    0 12px 32px rgba(99, 102, 241, 0.18);
+}
+.todo-card--done { opacity: 0.72; }
+
+/* ── Header ──────────────────────────────────────── */
+.todo-card__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+/* ── Checkbox ────────────────────────────────────── */
+.todo-card__checkbox-label {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  margin-top: 0.2rem;
+}
+.todo-card__checkbox {
+  position: absolute;
+  opacity: 0;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+.todo-card__checkbox-custom {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #94a3b8;
+  border-radius: 6px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+  pointer-events: none;
+}
+.todo-card__checkbox:checked + .todo-card__checkbox-custom {
+  background: #6366f1;
+  border-color: #6366f1;
+}
+.todo-card__checkbox:checked + .todo-card__checkbox-custom::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 10px;
+  border: 2px solid #fff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.todo-card__checkbox:focus-visible + .todo-card__checkbox-custom {
+  outline: 3px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* ── Title ───────────────────────────────────────── */
+.todo-card__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #1a202c;
+  line-height: 1.4;
+  flex: 1;
+  transition: color 0.2s;
+}
+.todo-card__title--done {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+/* ── Badges ──────────────────────────────────────── */
+.todo-card__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.priority--high   { background: #fee2e2; color: #b91c1c; }
+.priority--medium { background: #fef3c7; color: #b45309; }
+.priority--low    { background: #dcfce7; color: #15803d; }
+
+.status--pending     { background: #e0e7ff; color: #4338ca; }
+.status--in-progress { background: #dbeafe; color: #1d4ed8; }
+.status--done        { background: #dcfce7; color: #15803d; }
+
+/* ── Description ─────────────────────────────────── */
+.todo-card__description {
+  font-size: 0.875rem;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+/* ── Meta rows ───────────────────────────────────── */
+.todo-card__meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.todo-card__meta-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+  min-width: 4rem;
+}
+.todo-card__due-date {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+}
+.todo-card__time-remaining {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6366f1;
+  background: #eef2ff;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+}
+.todo-card__time-remaining--overdue {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+/* ── Tags ────────────────────────────────────────── */
+.todo-card__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.todo-card__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.todo-card__tag--work   { background: #ede9fe; color: #6d28d9; }
+.todo-card__tag--urgent { background: #fee2e2; color: #b91c1c; }
+.todo-card__tag--design { background: #fce7f3; color: #be185d; }
+
+/* ── Actions ─────────────────────────────────────── */
+.todo-card__actions {
+  display: flex;
+  gap: 0.625rem;
+  margin-top: 0.25rem;
+}
+.todo-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+.todo-card__btn:focus-visible {
+  outline: 3px solid #6366f1;
+  outline-offset: 2px;
+}
+.todo-card__btn:active { transform: scale(0.97); }
+.todo-card__btn--edit   { background: #f1f5f9; color: #374151; }
+.todo-card__btn--edit:hover   { background: #e2e8f0; }
+.todo-card__btn--delete { background: #fee2e2; color: #b91c1c; }
+.todo-card__btn--delete:hover { background: #fecaca; }
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 480px) {
+  .todo-card {
+    max-width: 100%;
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .todo-card__title { font-size: 0.975rem; }
+  .todo-card__actions { flex-direction: column; }
+  .todo-card__btn { justify-content: center; padding: 0.625rem 1rem; }
+}
+@media (min-width: 768px) {
+  .todo-card { padding: 2rem; }
+}
