@@ -135,8 +135,12 @@ function renderAll() {
   // ── Priority wrapper gradient ─────────────────────
   wrapper.className = `todo-card-wrapper wrapper--${pk}`;
 
-  // ── Priority label (top of gradient shell) ────────
-  const labelMap = { High: "HIGH", Medium: "MEDIUM", Low: "LOW" };
+  // ── Priority label (top of coloured header band) ──
+  const labelMap = {
+    High:   "⬥ HIGH PRIORITY",
+    Medium: "⬥ MEDIUM PRIORITY",
+    Low:    "⬥ LOW PRIORITY",
+  };
   priorityLabelEl.textContent = labelMap[state.priority] || state.priority;
   priorityLabelEl.setAttribute("aria-label", `${state.priority} priority`);
 
