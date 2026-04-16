@@ -6,10 +6,352 @@
     <title>Todo Card</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div id="todo-card-wrapper" class="todo-card-wrapper wrapper--high">
+      <span
+        data-testid="test-todo-priority"
+        id="todo-priority-label"
+        class="todo-card__priority-label"
+        aria-label="High priority"
+        >HIGH PRIORITY</span
+      >
+
+      <article
+        data-testid="test-todo-card"
+        id="todo-card"
+        class="todo-card"
+        aria-label="Todo task card"
+      >
+        <!--
+        Priority indicator: absolute left bar — no effect on card's top padding.
+        Color changes with priority via JS-toggled class.
+      -->
+        <div
+          data-testid="test-todo-priority-indicator"
+          id="todo-priority-indicator"
+          class="todo-card__priority-indicator priority-indicator--high"
+          aria-hidden="true"
+        ></div>
+
+        <!-- ═══════════════════════════════════════════════
+           VIEW PANEL — normal card content
+           Hidden when edit mode is active
+      ══════════════════════════════════════════════════ -->
+        <div id="todo-view-panel" class="todo-card__view-panel">
+          <!-- Checkbox + Title -->
+          <div class="todo-card__title-row">
+            <label class="todo-card__checkbox-label" for="todo-complete">
+              <input
+                id="todo-complete"
+                type="checkbox"
+                data-testid="test-todo-complete-toggle"
+                class="todo-card__checkbox"
+                aria-label="Mark task as complete"
+              />
+              <span
+                class="todo-card__checkbox-custom"
+                aria-hidden="true"
+              ></span>
+            </label>
+
+            <h2
+              data-testid="test-todo-title"
+              id="todo-title"
+              class="todo-card__title"
+            >
+              Build a Testable Todo Item Card
+            </h2>
+          </div>
+
+          <!-- Status control (tab 2: after checkbox, before expand toggle) -->
+          <div class="todo-card__status-row">
+            <!-- Kept hidden — satisfies Stage 0 testid requirement -->
+            <span
+              data-testid="test-todo-status"
+              id="todo-status"
+              class="todo-card__status-badge status--in-progress sr-only"
+              aria-hidden="true"
+              >In Progress</span
+            >
+
+            <label for="todo-status-control" class="sr-only">Task status</label>
+            <select
+              id="todo-status-control"
+              data-testid="test-todo-status-control"
+              class="todo-card__status-control status--in-progress"
+              aria-label="Change task status"
+            >
+              <option value="Pending">Pending</option>
+              <option value="In Progress" selected>In Progress</option>
+              <option value="Done">Done</option>
+            </select>
+          </div>
+
+          <!-- Collapsible description (accordion) -->
+          <div
+            data-testid="test-todo-collapsible-section"
+            id="todo-collapsible"
+            class="todo-card__collapsible todo-card__collapsible--collapsed"
+          >
+            <p
+              data-testid="test-todo-description"
+              id="todo-description"
+              class="todo-card__description"
+            >
+              Designing the basic structure of the Todo Card component. Focus on
+              accessibility, semantic HTML, and all required testid attributes.
+              This component should be fully keyboard navigable and visually
+              appealing across all screen sizes, including mobile, tablet, and
+              desktop viewports with no layout breaking.
+            </p>
+          </div>
+
+          <!-- Accordion toggle (tab 3) -->
+          <button
+            data-testid="test-todo-expand-toggle"
+            id="todo-expand-toggle"
+            class="todo-card__expand-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="todo-collapsible"
+            hidden
+          >
+            <span class="toggle-label">Show more</span>
+            <svg
+              class="toggle-chevron"
+              aria-hidden="true"
+              focusable="false"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+
+          <!-- Tags -->
+          <div class="todo-card__middle-row">
+            <ul
+              data-testid="test-todo-tags"
+              class="todo-card__tags"
+              role="list"
+              aria-label="Task tags"
+            >
+              <li role="listitem">
+                <span
+                  data-testid="test-todo-tag-work"
+                  class="todo-card__tag todo-card__tag--work"
+                  >Work</span
+                >
+              </li>
+              <li role="listitem">
+                <span
+                  data-testid="test-todo-tag-urgent"
+                  class="todo-card__tag todo-card__tag--urgent"
+                  >Urgent</span
+                >
+              </li>
+              <li role="listitem">
+                <span
+                  data-testid="test-todo-tag-design"
+                  class="todo-card__tag todo-card__tag--design"
+                  >Design</span
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Bottom row -->
+          <div class="todo-card__bottom-row">
+            <div class="todo-card__bottom-left">
+              <!-- Edit (tab 4) -->
+              <button
+                data-testid="test-todo-edit-button"
+                id="todo-edit-button"
+                class="todo-card__icon-btn"
+                type="button"
+                aria-label="Edit task"
+                aria-expanded="false"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                  />
+                  <path
+                    d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
+                  />
+                </svg>
+                Edit
+              </button>
+
+              <!-- Delete (tab 5) -->
+              <button
+                data-testid="test-todo-delete-button"
+                id="todo-delete-button"
+                class="todo-card__icon-btn todo-card__icon-btn--delete"
+                type="button"
+                aria-label="Delete task"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="3 6 5 6 21 6" />
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                  <path d="M10 11v6M14 11v6" />
+                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                </svg>
+                Delete
+              </button>
+
+              <time
+                data-testid="test-todo-time-remaining"
+                id="time-remaining"
+                class="todo-card__time-remaining"
+                datetime="2026-04-16T18:00:00Z"
+                aria-live="polite"
+                aria-atomic="true"
+              >
+                <svg
+                  aria-hidden="true"
+                  focusable="false"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+                <span id="time-remaining-text"></span>
+              </time>
+
+              <span
+                data-testid="test-todo-overdue-indicator"
+                id="todo-overdue-indicator"
+                class="todo-card__overdue-indicator"
+                aria-live="polite"
+                hidden
+                >Overdue</span
+              >
+            </div>
+
+            <time
+              data-testid="test-todo-due-date"
+              id="due-date"
+              class="todo-card__due-date"
+              datetime="2026-04-16T18:00:00Z"
+              aria-label="Due date: Apr 16, 2026"
+            ></time>
+          </div>
+        </div>
+        <form
+          data-testid="test-todo-edit-form"
+          id="todo-edit-form"
+          class="todo-card__edit-form"
+          hidden
+          aria-label="Edit task"
+          novalidate
+        >
+          <div class="todo-card__edit-field">
+            <label for="edit-title">Title</label>
+            <input
+              id="edit-title"
+              data-testid="test-todo-edit-title-input"
+              type="text"
+              placeholder="Task title"
+              autocomplete="off"
+            />
+          </div>
+
+          <div class="todo-card__edit-field">
+            <label for="edit-description">Description</label>
+            <textarea
+              id="edit-description"
+              data-testid="test-todo-edit-description-input"
+              placeholder="Task description"
+              rows="4"
+            ></textarea>
+          </div>
+
+          <div class="todo-card__edit-row">
+            <div class="todo-card__edit-field">
+              <label for="edit-priority">Priority</label>
+              <select
+                id="edit-priority"
+                data-testid="test-todo-edit-priority-select"
+              >
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High" selected>High</option>
+              </select>
+            </div>
+
+            <div class="todo-card__edit-field">
+              <label for="edit-due-date">Due Date</label>
+              <input
+                id="edit-due-date"
+                data-testid="test-todo-edit-due-date-input"
+                type="date"
+              />
+            </div>
+          </div>
+
+          <div class="todo-card__edit-actions">
+            <button
+              data-testid="test-todo-save-button"
+              type="submit"
+              class="todo-card__btn todo-card__btn--save"
+            >
+              Save changes
+            </button>
+            <button
+              data-testid="test-todo-cancel-button"
+              id="todo-cancel-button"
+              type="button"
+              class="todo-card__btn todo-card__btn--cancel"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </article>
+    </div>
+
+    <script src="script.js"></script>
   </body>
 </html>

@@ -54,7 +54,7 @@
 /* ── White card ───────────────────────────────────────── */
 .todo-card {
   background: #ffffff;
-  border: 0.125rem dashed #cbd5e1;
+  /* border: 0.125rem dashed #cbd5e1; */
   border-radius: 0.875rem;
   overflow: hidden;
   width: 100%;
